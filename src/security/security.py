@@ -4,6 +4,19 @@ from flask import request
 from src.utils.errors import AccessDeniedError, UnauthorizedError
 from src.security.Auth import Auth
 
+
+def get_token_data():
+    token = request.headers.get('access_token', None)
+    if not token:
+        return None
+    return Auth().decodeToken(token)
+
+
+def get_user_id_in_token()-> int:
+    token_data = get_token_data()
+    return token_data.get('id')
+
+
 def get_roles():
     token = request.headers.get('access_token', None)
     if not token:

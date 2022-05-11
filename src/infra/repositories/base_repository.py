@@ -10,6 +10,14 @@ class BaseRepository:
         session.commit()
         return entity
 
+    def update(self, id, data_to_update):
+        session = get_session()
+        entity = self.read_by_id(id)
+        for key in data_to_update:
+            setattr(entity, key, data_to_update[key])
+        session.commit()
+        return entity
+        
     def delete(self, id):
         session = get_session()
         entity = self.read_by_id(id)
